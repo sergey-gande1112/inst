@@ -16,12 +16,72 @@
             align-items: center;
             flex-direction: column;
             min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+            background: #2b2b2b;
+        }
+        /* Эффект плывущего пепла */
+        .ash {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .ash div {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: url('https://www.transparenttextures.com/patterns/ash.png') no-repeat;
+            background-size: cover;
+            opacity: 0.2;
+            animation: float 30s linear infinite;
+        }
+        .ash div:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            animation-duration: 35s;
+        }
+        .ash div:nth-child(2) {
+            top: 30%;
+            left: 40%;
+            animation-duration: 40s;
+        }
+        .ash div:nth-child(3) {
+            top: 50%;
+            left: 70%;
+            animation-duration: 45s;
+        }
+        .ash div:nth-child(4) {
+            top: 70%;
+            left: 20%;
+            animation-duration: 50s;
+        }
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0);
+            }
+            100% {
+                transform: translateY(100%) translateX(100%);
+            }
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+            animation: fadeInText 2s ease-out;
+            z-index: 1;
         }
         .card-container {
             display: flex;
             gap: 20px;
             flex-wrap: wrap;
             justify-content: center;
+            animation: fadeInContainer 2s ease-out;
+            z-index: 1;
         }
         .card {
             background-color: #444;
@@ -29,16 +89,28 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             overflow: hidden;
             width: 300px;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.4s, box-shadow 0.4s, filter 0.4s, opacity 0.4s;
+            position: relative;
+            opacity: 0;
+            animation: fadeInCard 1s forwards;
         }
+        .card:nth-child(1) { animation-delay: 0.2s; }
+        .card:nth-child(2) { animation-delay: 0.4s; }
+        .card:nth-child(3) { animation-delay: 0.6s; }
         .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            transform: translateY(-15px) rotate(1deg);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+            filter: brightness(1.15);
         }
         .card img {
             width: 100%;
             height: 200px;
             object-fit: cover;
+            transition: transform 0.4s, filter 0.4s;
+        }
+        .card:hover img {
+            transform: scale(1.1);
+            filter: brightness(0.9);
         }
         .card a {
             text-decoration: none;
@@ -47,27 +119,94 @@
             display: block;
             padding: 15px;
             background: linear-gradient(to right, #6A82FB, #FC5C7D);
-            transition: background 0.3s;
+            transition: background 0.4s, transform 0.4s, color 0.4s;
+            position: relative;
+            z-index: 1;
+            cursor: pointer;
+            user-select: none;
         }
         .card a:hover {
             background: linear-gradient(to right, #FC5C7D, #6A82FB);
+            color: #fff;
+            transform: scale(1.05);
+        }
+        .card a:active {
+            transform: scale(0.95);
+        }
+        .card a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: opacity 0.4s;
+            z-index: -1;
+        }
+        .card a:hover::before {
+            opacity: 1;
+        }
+        .no-select {
+            -webkit-touch-callout: none; /* iOS Safari */
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently supported by Chrome, Opera, and Edge */
+        }
+        @keyframes fadeInText {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeInContainer {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeInCard {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
 <body>
+    <div class="ash">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
     <h1>Sky Shop - Инструкции</h1>
     <div class="card-container">
         <div class="card">
             <img src="logo1.jpg" alt="Как пополнить баланс">
-            <a href="https://teletype.in/@oneinskyr/vlUKKAVRIwO">Как пополнить баланс в боте и сделать покупку.</a>
+            <a href="https://teletype.in/@oneinskyr/vlUKKAVRIwO" class="no-select">Как пополнить баланс в боте и сделать покупку.</a>
         </div>
         <div class="card">
             <img src="logo2.jpg" alt="Как пригласить друга">
-            <a href="https://telegra.ph/Referalnaya-sistema-02-29">Как пригласить друга и получать % с его покупок.</a>
+            <a href="https://telegra.ph/Referalnaya-sistema-02-29" class="no-select">Как пригласить друга и получать % с его покупок.</a>
         </div>
         <div class="card">
             <img src="logo3.jpg" alt="SMS-сервисы">
-            <a href="https://teletype.in/@oneinskyr/XpJXTMvLmVQ">SMS-сервисы и как ими пользоваться</a>
+            <a href="https://teletype.in/@oneinskyr/XpJXTMvLmVQ" class="no-select">SMS-сервисы и как ими пользоваться</a>
         </div>
     </div>
 </body>
