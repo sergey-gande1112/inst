@@ -16,7 +16,7 @@
             align-items: center;
             flex-direction: column;
             min-height: 100vh;
-            overflow: hidden;
+            overflow-y: auto; /* Добавлено для вертикальной прокрутки */
             position: relative;
         }
         /* Эффект плывущего пепла */
@@ -83,6 +83,8 @@
             margin: 0 auto;
             animation: fadeInContainer 2s ease-out;
             z-index: 1;
+            overflow-y: auto; /* Добавлено для вертикальной прокрутки */
+            max-height: 80vh; /* Устанавливаем максимальную высоту для карточек */
         }
         .card {
             background-color: #444;
